@@ -15,10 +15,10 @@
     <div class="row">
         <div *ngFor="let course of courses" class="col-sm-6 col-md-4">
             <div class="thumbnail">
-                <img [src]="course.imageUrl">
+                <img class="course-img" [src]="course.imageUrl" width="304" height="171">
                 <div class="caption">
                     <h3>{{course.name}}</h3>
-                    <p>{{course.description| summary:120}}</p>
+                    <p>{{course.description| summary:115}}</p>
                     <p><a [routerLink]="['course',course.id]" class="btn btn-primary center-block" role="button">View Details</a></p>
                 </div>
             </div>

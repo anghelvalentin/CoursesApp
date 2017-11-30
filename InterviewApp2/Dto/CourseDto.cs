@@ -18,7 +18,8 @@ namespace InterviewApp2.Dto
         public string Description { get; set; }
 
         [Required]
-        public string Url { get; set; }
+        public string ImageUrl { get; set; }
+
 
         [Required]
         public decimal Price { get; set; }

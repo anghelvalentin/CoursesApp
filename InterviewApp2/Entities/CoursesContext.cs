@@ -13,6 +13,15 @@ namespace InterviewApp2.Entities
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Enrolment>()
+                .HasKey(e => new { e.CourseId, e.UserId });
+        }
+
         public DbSet<Course> Courses { get; set; }
+
+        public DbSet<Enrolment> Enrollments { get; set; }
     }
 }

@@ -12,6 +12,11 @@ import { CoursesService } from './services/courses.service';
 import { MyCoursesComponent } from './components/my-courses/my-courses.component';
 import { SummaryPipe } from './pipes/summary.pipe';
 import { CourseComponent } from './components/course/course.component';
+import { CourseFormComponent } from './components/course-form/course-form.component';
+import { PriceValidator } from './common/price-validator';
+import { AuthService } from './services/auth.service';
+import { NoAccessComponent } from './components/general/no-access/no-access.component';
+import { AuthGuard } from './common/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,10 @@ import { CourseComponent } from './components/course/course.component';
       HomeComponent,
       MyCoursesComponent,
       SummaryPipe,
-      CourseComponent
+      CourseComponent,
+      CourseFormComponent,
+      PriceValidator,
+      NoAccessComponent
   ],
   imports: [
       BrowserModule,
@@ -28,11 +36,13 @@ import { CourseComponent } from './components/course/course.component';
       HttpModule,
       RouterModule.forRoot([
           { path: '', component: HomeComponent },
-          { path: 'MyCourses', component: MyCoursesComponent },
-          { path: 'course/:id', component: CourseComponent }
+          { path: 'MyCourses', component: MyCoursesComponent},
+          { path: 'course/new', component: CourseFormComponent },
+          { path: 'course/:id', component: CourseComponent},
+          { path: 'no-access', component: NoAccessComponent }
       ])
-  ],
-  providers: [CoursesService],
+    ],
+    providers: [CoursesService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

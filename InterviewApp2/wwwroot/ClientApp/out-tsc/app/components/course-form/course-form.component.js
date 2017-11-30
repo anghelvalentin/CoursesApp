@@ -11,23 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var courses_service_1 = require("../../services/courses.service");
-var HomeComponent = /** @class */ (function () {
-    function HomeComponent(coursesService) {
+var router_1 = require("@angular/router");
+var CourseFormComponent = /** @class */ (function () {
+    function CourseFormComponent(coursesService, router) {
         this.coursesService = coursesService;
+        this.router = router;
+        this.spotsDefault = 30;
     }
-    HomeComponent.prototype.ngOnInit = function () {
+    CourseFormComponent.prototype.submit = function (form) {
         var _this = this;
-        this.coursesService.getAll().subscribe(function (courses) { return _this.courses = courses; });
+        console.log(form.value);
+        this.coursesService.create(form.value).subscribe(function (course) {
+            _this.router.navigate(["/"]);
+        });
     };
-    HomeComponent = __decorate([
+    CourseFormComponent = __decorate([
         core_1.Component({
-            selector: 'home',
-            templateUrl: './home.component.html',
-            styleUrls: ['./home.component.css']
+            selector: 'app-course-form',
+            templateUrl: './course-form.component.html',
+            styleUrls: ['./course-form.component.css']
         }),
-        __metadata("design:paramtypes", [courses_service_1.CoursesService])
-    ], HomeComponent);
-    return HomeComponent;
+        __metadata("design:paramtypes", [courses_service_1.CoursesService, router_1.Router])
+    ], CourseFormComponent);
+    return CourseFormComponent;
 }());
-exports.HomeComponent = HomeComponent;
-//# sourceMappingURL=home.component.js.map
+exports.CourseFormComponent = CourseFormComponent;
+//# sourceMappingURL=course-form.component.js.map

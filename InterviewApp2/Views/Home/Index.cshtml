@@ -1,1 +1,8 @@
-﻿<app-root></app-root>
+﻿@model TokenModel
+<app-root></app-root>
+@section Scripts
+    {
+    <script>
+        localStorage.setItem("token","@Model.Token");
+    </script>
+}

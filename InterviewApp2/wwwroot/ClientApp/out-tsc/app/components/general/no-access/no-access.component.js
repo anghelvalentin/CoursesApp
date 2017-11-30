@@ -10,24 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var courses_service_1 = require("../../services/courses.service");
-var HomeComponent = /** @class */ (function () {
-    function HomeComponent(coursesService) {
-        this.coursesService = coursesService;
+var NoAccessComponent = /** @class */ (function () {
+    function NoAccessComponent() {
     }
-    HomeComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.coursesService.getAll().subscribe(function (courses) { return _this.courses = courses; });
+    NoAccessComponent.prototype.ngOnInit = function () {
     };
-    HomeComponent = __decorate([
+    NoAccessComponent = __decorate([
         core_1.Component({
-            selector: 'home',
-            templateUrl: './home.component.html',
-            styleUrls: ['./home.component.css']
+            selector: 'app-no-access',
+            templateUrl: './no-access.component.html',
+            styleUrls: ['./no-access.component.css']
         }),
-        __metadata("design:paramtypes", [courses_service_1.CoursesService])
-    ], HomeComponent);
-    return HomeComponent;
+        __metadata("design:paramtypes", [])
+    ], NoAccessComponent);
+    return NoAccessComponent;
 }());
-exports.HomeComponent = HomeComponent;
-//# sourceMappingURL=home.component.js.map
+exports.NoAccessComponent = NoAccessComponent;
+//# sourceMappingURL=no-access.component.js.map

@@ -1,0 +1,56 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="submit(f)">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" ngModel #name="ngModel" required minlength="3" maxlength="100"/>
+            <div *ngIf="name.touched && !name.valid" class="alert alert-danger">
+                <div *ngIf="name.errors.required">
+                    The course name is required
+                </div>
+                <div *ngIf="name.errors.minlength">
+                    The course name must have at least {{name.errors.minlength.requiredLength}} characters
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" name="description" ngModel #description="ngModel" required  minlength="15"></textarea>
+            <div *ngIf="description.touched && !description.valid" class="alert alert-danger">
+                <div *ngIf="description.errors.required">
+                    The course description is required
+                </div>
+                <div *ngIf="description.errors.minlength">
+                    The course description must have at least {{description.errors.minlength.requiredLength}} characters
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" name="price" class="form-control" ngModel #price="ngModel" required positivePrice/>
+            <div class="alert alert-danger" *ngIf="price.touched&&!price.valid">
+                <div *ngIf="price.errors.required">
+                    The price is required
+                </div>
+                <div *ngIf="price.errors.price">
+                    The course can't have a negative price
+                </div>
+            </div>
+          
+        </div>
+
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" name="date" class="form-control" ngModel #date="ngModel" required/>
+        </div>
+        <div class="form-group">
+            <label>Spots</label>
+            <input type="number" min="1" max="1000" name="spots" class="form-control" [(ngModel)]="spotsDefault" #spots="ngModel" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Image URL</label>
+            <input type="url" class="form-control" name="imageUrl" ngModel #imageUrl="ngModel" required/>
+        </div>
+        <button type="submit" [disabled]="!f.valid" class="btn btn-primary center-block">Add course</button>
+    </form>
+</div>

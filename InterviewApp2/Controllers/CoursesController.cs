@@ -98,7 +98,8 @@ namespace InterviewApp2.Controllers
                 Name = courseDto.Name,
                 Spots = courseDto.Spots,
                 FreeSpots = courseDto.Spots,
-                Price = courseDto.Price
+                Price = courseDto.Price,
+                ImageUrl = courseDto.ImageUrl
             };
             _context.Courses.Add(course);
 

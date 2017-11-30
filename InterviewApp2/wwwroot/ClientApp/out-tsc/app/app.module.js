@@ -18,6 +18,11 @@ var courses_service_1 = require("./services/courses.service");
 var my_courses_component_1 = require("./components/my-courses/my-courses.component");
 var summary_pipe_1 = require("./pipes/summary.pipe");
 var course_component_1 = require("./components/course/course.component");
+var course_form_component_1 = require("./components/course-form/course-form.component");
+var price_validator_1 = require("./common/price-validator");
+var auth_service_1 = require("./services/auth.service");
+var no_access_component_1 = require("./components/general/no-access/no-access.component");
+var auth_guard_service_1 = require("./common/auth-guard.service");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -29,19 +34,24 @@ var AppModule = /** @class */ (function () {
                 home_component_1.HomeComponent,
                 my_courses_component_1.MyCoursesComponent,
                 summary_pipe_1.SummaryPipe,
-                course_component_1.CourseComponent
+                course_component_1.CourseComponent,
+                course_form_component_1.CourseFormComponent,
+                price_validator_1.PriceValidator,
+                no_access_component_1.NoAccessComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
                 http_1.HttpModule,
                 router_1.RouterModule.forRoot([
-                    { path: '', component: home_component_1.HomeComponent },
-                    { path: 'MyCourses', component: my_courses_component_1.MyCoursesComponent },
-                    { path: 'course/:id', component: course_component_1.CourseComponent }
+                    { path: '', component: home_component_1.HomeComponent, canActivate: [auth_guard_service_1.AuthGuard] },
+                    { path: 'MyCourses', component: my_courses_component_1.MyCoursesComponent, canActivate: [auth_guard_service_1.AuthGuard] },
+                    { path: 'course/new', component: course_form_component_1.CourseFormComponent, canActivate: [auth_guard_service_1.AuthGuard] },
+                    { path: 'course/:id', component: course_component_1.CourseComponent, canActivate: [auth_guard_service_1.AuthGuard] },
+                    { path: 'no-access', component: no_access_component_1.NoAccessComponent }
                 ])
             ],
-            providers: [courses_service_1.CoursesService],
+            providers: [courses_service_1.CoursesService, auth_service_1.AuthService, auth_guard_service_1.AuthGuard],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
