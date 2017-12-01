@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var courses_service_1 = require("../../services/courses.service");
+var auth_service_1 = require("../../services/auth.service");
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(coursesService) {
+    function HomeComponent(coursesService, authService) {
         this.coursesService = coursesService;
+        this.authService = authService;
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -25,7 +27,7 @@ var HomeComponent = /** @class */ (function () {
             templateUrl: './home.component.html',
             styleUrls: ['./home.component.css']
         }),
-        __metadata("design:paramtypes", [courses_service_1.CoursesService])
+        __metadata("design:paramtypes", [courses_service_1.CoursesService, auth_service_1.AuthService])
     ], HomeComponent);
     return HomeComponent;
 }());

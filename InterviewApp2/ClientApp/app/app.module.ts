@@ -17,6 +17,7 @@ import { PriceValidator } from './common/price-validator';
 import { AuthService } from './services/auth.service';
 import { NoAccessComponent } from './components/general/no-access/no-access.component';
 import { AuthGuard } from './common/auth-guard.service';
+import { EnrolmentService } from './services/enrolment.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { AuthGuard } from './common/auth-guard.service';
           { path: 'no-access', component: NoAccessComponent }
       ])
     ],
-    providers: [CoursesService, AuthService, AuthGuard],
+    providers: [CoursesService, AuthService, AuthGuard, EnrolmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

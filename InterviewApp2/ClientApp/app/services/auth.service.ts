@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 
 export class Auth {
@@ -10,47 +11,17 @@ export class Auth {
 
 @Injectable()
 export class AuthService {
-    private baseUrl = 'http://localhost:52046/api/security/';
-    private auth: Auth;
-    private options = new RequestOptions({ withCredentials: true });
-
-    constructor(private http: Http) {
-
-        this.http.get(this.baseUrl, this.options)
-            .map((res) => this.extractData<Auth>(res))
-            .subscribe(newItem => {
-                this.auth = newItem
-
-                console.warn(this.auth);
-            })
-
+   
+    isLoggedIn() {
+        return tokenNotExpired();
     }
 
-    public isLoggedIn(): Observable<boolean> | boolean {
-        //console.log(this.auth);
-        console.log(this.auth);
-        if (!this.auth) {
-            return this.http.get(this.baseUrl, this.options)
-                .map(res => {
-                    this.auth = this.extractData<Auth>(res);
-                    return this.auth.isUser;
-                });
-        }
-        else {
-            return this.auth.isUser;
-        }
+    get currentUser() {
+        let token = localStorage.getItem("token");
+        if (!token) return null;
 
-
+        return new JwtHelper().decodeToken(token);
     }
-
-    private extractData<T>(res) {
-        if (res.status < 200 || res.status >= 300) {
-            throw new Error('Bad response status: ' + res.status);
-        }
-        const b= res.json ? res.json() : null;
-        return <T>(b || {});
-    }
-
 
 }
 

@@ -16,8 +16,9 @@
                 </li>
             </ul>
             <form class="navbar-form navbar-left">
-                <a routerLink="/course/new" class="btn btn-primary">Add Course</a>
+                <a *ngIf="authService.currentUser.isAdmin" routerLink="/course/new" class="btn btn-primary">Add Course</a>
             </form>
+            <p class="nav navbar-text navbar-right">{{authService.currentUser.user}}</p>
         </div>
     </div>
 </nav>

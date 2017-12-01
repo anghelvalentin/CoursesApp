@@ -9,11 +9,11 @@ namespace InterviewApp2.Entities
 {
     public class Enrolment
     {
+
+        public string UserId { get; set; }
+
         public int CourseId { get; set; }
 
-        public int UserId { get; set; }
-
-        [ForeignKey("Id")]
         public virtual Course Course { get; set; }
 
     }

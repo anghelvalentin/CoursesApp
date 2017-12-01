@@ -21,7 +21,7 @@ namespace InterviewApp2.Controllers
             _context = context;
             if (_context.Courses.Count() == 0)
             {
-                _context.Courses.Add(new Course()
+                _context.Courses.Add(new Entities.Course()
                 {
                     Name = "C# for beginners",
                     Date = DateTime.Now.AddMonths(3),
@@ -31,7 +31,7 @@ namespace InterviewApp2.Controllers
                     Price = 9.99m,
                     Description = "Learn C# and programming mindset using high-quality, bite-sized videos with real-world examples and lots of exercises."
                 });
-                _context.Courses.Add(new Course()
+                _context.Courses.Add(new Entities.Course()
                 {
                     Name = "C# for experts",
                     Date = DateTime.Now.AddDays(10),
@@ -41,7 +41,7 @@ namespace InterviewApp2.Controllers
                     Description = "Get to grips with the mechanics of .NET and C# to help you write powerful applications more efficiently.",
                     ImageUrl = "https://udemy-images.udemy.com/course/304x171/802808_6b28.jpg"
                 });
-                _context.Courses.Add(new Course()
+                _context.Courses.Add(new Entities.Course()
                 {
                     Name = "Angular 4",
                     Date = DateTime.Now.AddMonths(4),
@@ -51,7 +51,7 @@ namespace InterviewApp2.Controllers
                     Description = "Learn one way to build applications with Angular and reuse your code and abilities to build apps for any deployment target. For web, mobile web, native mobile.",
                     ImageUrl = "https://udemy-images.udemy.com/course/304x171/1247828_32bb.jpg"
                 });
-                _context.Courses.Add(new Course()
+                _context.Courses.Add(new Entities.Course()
                 {
                     Name = "Javascript Vanilla",
                     Date = DateTime.Now.AddMonths(5),
@@ -67,7 +67,7 @@ namespace InterviewApp2.Controllers
 
 
         [HttpGet]
-        public IEnumerable<Course> GetAll()
+        public IEnumerable<Entities.Course> GetAll()
         {
             return _context.Courses;
         }
@@ -86,12 +86,12 @@ namespace InterviewApp2.Controllers
 
 
         [HttpPost]
-        public IActionResult Create([FromBody] CourseDto courseDto)
+        public IActionResult Create([FromBody] Dto.CourseDto courseDto)
         {
             if (courseDto == null)
                 return BadRequest();
 
-            Course course = new Course()
+            Entities.Course course = new Entities.Course()
             {
                 Date = courseDto.Date,
                 Description = courseDto.Description,

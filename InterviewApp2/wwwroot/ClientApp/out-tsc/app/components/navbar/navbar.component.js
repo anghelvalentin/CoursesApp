@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var auth_service_1 = require("../../services/auth.service");
 var NavbarComponent = /** @class */ (function () {
     //@Input("username") username: string;
-    function NavbarComponent() {
+    function NavbarComponent(authService) {
+        this.authService = authService;
     }
     NavbarComponent.prototype.ngOnInit = function () {
     };
@@ -22,7 +24,7 @@ var NavbarComponent = /** @class */ (function () {
             templateUrl: './navbar.component.html',
             styles: []
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [auth_service_1.AuthService])
     ], NavbarComponent);
     return NavbarComponent;
 }());

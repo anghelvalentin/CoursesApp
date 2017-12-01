@@ -23,6 +23,7 @@ var price_validator_1 = require("./common/price-validator");
 var auth_service_1 = require("./services/auth.service");
 var no_access_component_1 = require("./components/general/no-access/no-access.component");
 var auth_guard_service_1 = require("./common/auth-guard.service");
+var enrolment_service_1 = require("./services/enrolment.service");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -44,14 +45,14 @@ var AppModule = /** @class */ (function () {
                 forms_1.FormsModule,
                 http_1.HttpModule,
                 router_1.RouterModule.forRoot([
-                    { path: '', component: home_component_1.HomeComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: 'MyCourses', component: my_courses_component_1.MyCoursesComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: 'course/new', component: course_form_component_1.CourseFormComponent, canActivate: [auth_guard_service_1.AuthGuard] },
-                    { path: 'course/:id', component: course_component_1.CourseComponent, canActivate: [auth_guard_service_1.AuthGuard] },
+                    { path: '', component: home_component_1.HomeComponent },
+                    { path: 'MyCourses', component: my_courses_component_1.MyCoursesComponent },
+                    { path: 'course/new', component: course_form_component_1.CourseFormComponent },
+                    { path: 'course/:id', component: course_component_1.CourseComponent },
                     { path: 'no-access', component: no_access_component_1.NoAccessComponent }
                 ])
             ],
-            providers: [courses_service_1.CoursesService, auth_service_1.AuthService, auth_guard_service_1.AuthGuard],
+            providers: [courses_service_1.CoursesService, auth_service_1.AuthService, auth_guard_service_1.AuthGuard, enrolment_service_1.EnrolmentService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
