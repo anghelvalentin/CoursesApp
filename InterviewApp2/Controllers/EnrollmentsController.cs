@@ -14,9 +14,9 @@ namespace InterviewApp2.Controllers
     [Route("api/Enrollments")]
     public class EnrollmentsController : Controller
     {
-        private readonly CoursesContext _context;
+        private readonly AppDbContext _context;
 
-        public EnrollmentsController(CoursesContext context)
+        public EnrollmentsController(AppDbContext context)
         {
             this._context = context;
         }

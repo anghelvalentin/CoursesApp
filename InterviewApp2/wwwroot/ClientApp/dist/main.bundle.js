@@ -89,13 +89,13 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */].forRoot([
                 { path: '', component: __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__["a" /* HomeComponent */] },
                 { path: 'MyCourses', component: __WEBPACK_IMPORTED_MODULE_9__components_my_courses_my_courses_component__["a" /* MyCoursesComponent */] },
-                { path: 'course/new', component: __WEBPACK_IMPORTED_MODULE_12__components_course_form_course_form_component__["a" /* CourseFormComponent */] },
-                { path: 'course/edit/:id', component: __WEBPACK_IMPORTED_MODULE_12__components_course_form_course_form_component__["a" /* CourseFormComponent */] },
+                { path: 'course/new', component: __WEBPACK_IMPORTED_MODULE_12__components_course_form_course_form_component__["a" /* CourseFormComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_16__common_auth_guard_service__["a" /* AdminGuard */]] },
+                { path: 'course/edit/:id', component: __WEBPACK_IMPORTED_MODULE_12__components_course_form_course_form_component__["a" /* CourseFormComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_16__common_auth_guard_service__["a" /* AdminGuard */]] },
                 { path: 'course/:id', component: __WEBPACK_IMPORTED_MODULE_11__components_course_course_component__["a" /* CourseComponent */] },
                 { path: 'no-access', component: __WEBPACK_IMPORTED_MODULE_15__components_general_no_access_no_access_component__["a" /* NoAccessComponent */] }
             ])
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__services_courses_service__["a" /* CoursesService */], __WEBPACK_IMPORTED_MODULE_14__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_16__common_auth_guard_service__["a" /* AuthGuard */], __WEBPACK_IMPORTED_MODULE_17__services_enrolment_service__["a" /* EnrolmentService */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__services_courses_service__["a" /* CoursesService */], __WEBPACK_IMPORTED_MODULE_14__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_16__common_auth_guard_service__["a" /* AdminGuard */], __WEBPACK_IMPORTED_MODULE_17__services_enrolment_service__["a" /* EnrolmentService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_5__components_app_app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -124,7 +124,7 @@ var AppError = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminGuard; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__("../../../../../ClientApp/app/services/auth.service.ts");
@@ -140,23 +140,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var AuthGuard = (function () {
-    function AuthGuard(authService, router) {
+var AdminGuard = (function () {
+    function AdminGuard(authService, router) {
         this.authService = authService;
         this.router = router;
     }
-    AuthGuard.prototype.canActivate = function (route, state) {
-        if (this.authService.isLoggedIn())
+    AdminGuard.prototype.canActivate = function (route, state) {
+        if (this.authService.currentUser.isAdmin)
             return true;
         this.router.navigate(["/no-access"]);
         return false;
     };
-    return AuthGuard;
+    return AdminGuard;
 }());
-AuthGuard = __decorate([
+AdminGuard = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
-], AuthGuard);
+], AdminGuard);
 
 var _a, _b;
 //# sourceMappingURL=auth-guard.service.js.map
@@ -535,7 +535,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../ClientApp/app/components/general/no-access/no-access.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2>You doesn't have rights to see this website</h2>\r\n\r\n<h3>Please contact the Security Administrator</h3>"
+module.exports = "<h2>You are not authorized to see this part of website</h2>\r\n\r\n<h3>Please contact the Security Administrator</h3>"
 
 /***/ }),
 

@@ -19,7 +19,16 @@ var HomeComponent = /** @class */ (function () {
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.coursesService.getAll().subscribe(function (courses) { return _this.courses = courses; });
+        this.coursesService.getAll().subscribe(function (courses) { return _this.filteredCourses = _this.courses = courses; });
+    };
+    HomeComponent.prototype.keyup = function (courseTitleHtml) {
+        var courseTitle = courseTitleHtml.value.toLowerCase();
+        if (courseTitle.length > 1) {
+            this.filteredCourses = this.courses.filter(function (course) { return course.name.toLowerCase().indexOf(courseTitle) > -1 || course.description.toLowerCase().indexOf(courseTitle) > -1; });
+        }
+        else {
+            this.filteredCourses = this.courses;
+        }
     };
     HomeComponent = __decorate([
         core_1.Component({

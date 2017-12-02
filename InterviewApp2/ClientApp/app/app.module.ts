@@ -16,7 +16,7 @@ import { CourseFormComponent } from './components/course-form/course-form.compon
 import { PriceValidator } from './common/price-validator';
 import { AuthService } from './services/auth.service';
 import { NoAccessComponent } from './components/general/no-access/no-access.component';
-import { AuthGuard } from './common/auth-guard.service';
+import { AdminGuard } from './common/auth-guard.service';
 import { EnrolmentService } from './services/enrolment.service';
 
 @NgModule({
@@ -37,14 +37,14 @@ import { EnrolmentService } from './services/enrolment.service';
       HttpModule,
       RouterModule.forRoot([
           { path: '', component: HomeComponent },
-          { path: 'MyCourses', component: MyCoursesComponent},
-          { path: 'course/new', component: CourseFormComponent },
-          { path: 'course/edit/:id', component: CourseFormComponent },
+          { path: 'MyCourses', component: MyCoursesComponent },
+          { path: 'course/new', component: CourseFormComponent, canActivate: [AdminGuard] },
+          { path: 'course/edit/:id', component: CourseFormComponent, canActivate: [AdminGuard] },
           { path: 'course/:id', component: CourseComponent},
           { path: 'no-access', component: NoAccessComponent }
       ])
     ],
-    providers: [CoursesService, AuthService, AuthGuard, EnrolmentService],
+    providers: [CoursesService, AuthService, AdminGuard, EnrolmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

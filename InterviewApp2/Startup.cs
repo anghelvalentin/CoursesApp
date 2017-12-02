@@ -23,13 +23,14 @@ namespace InterviewApp2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CoursesContext>(opt => opt.UseInMemoryDatabase("CoursesDB"));
+            services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("CoursesDB"));
 
             services.AddMvc();
+            services.AddTransient<UserGroupsInitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserGroupsInitializer userGroupsInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -57,6 +58,7 @@ namespace InterviewApp2
                     template: "{*.}",
                     defaults: new { controller = "Home", action = "Index" });
             });
+            userGroupsInitializer.Seed().Wait();
         }
     }
 }

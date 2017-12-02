@@ -13,10 +13,10 @@ namespace InterviewApp2.Controllers
     [Route("api/Courses")]
     public class CoursesController : Controller
     {
-        private readonly CoursesContext _context;
+        private readonly AppDbContext _context;
 
 
-        public CoursesController(CoursesContext context)
+        public CoursesController(AppDbContext context)
         {
             _context = context;
             if (_context.Courses.Count() == 0)

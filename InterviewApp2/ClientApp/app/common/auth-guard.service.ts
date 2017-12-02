@@ -4,12 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate{
+export class AdminGuard implements CanActivate{
     constructor(private authService: AuthService, private router:Router) { }
     
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
-        if (this.authService.isLoggedIn()) return true;
+        if (this.authService.currentUser.isAdmin) return true;
 
         this.router.navigate(["/no-access"]);
  

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace InterviewApp2.Entities
 {
-    public class CoursesContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public CoursesContext(DbContextOptions<CoursesContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
@@ -23,5 +23,7 @@ namespace InterviewApp2.Entities
         public DbSet<Course> Courses { get; set; }
 
         public DbSet<Enrolment> Enrollments { get; set; }
+
+        public DbSet<UserGroup> UserGroups { get; set; }
     }
 }
