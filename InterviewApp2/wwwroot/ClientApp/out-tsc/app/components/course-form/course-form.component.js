@@ -13,17 +13,41 @@ var core_1 = require("@angular/core");
 var courses_service_1 = require("../../services/courses.service");
 var router_1 = require("@angular/router");
 var CourseFormComponent = /** @class */ (function () {
-    function CourseFormComponent(coursesService, router) {
+    //readonly spotsDefault = 30;
+    function CourseFormComponent(coursesService, router, route) {
         this.coursesService = coursesService;
         this.router = router;
-        this.spotsDefault = 30;
+        this.route = route;
     }
+    CourseFormComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.id = this.route.snapshot.params["id"];
+        if (this.id) {
+            this.coursesService.get(this.id)
+                .subscribe(function (c) {
+                c.date = new Date(c.date).toJSON().slice(0, 10).replace(/-/g, '-');
+                _this.course = c;
+            });
+        }
+        else {
+            this.course = {};
+            this.course.spots = 30;
+        }
+    };
     CourseFormComponent.prototype.submit = function (form) {
         var _this = this;
-        console.log(form.value);
-        this.coursesService.create(form.value).subscribe(function (course) {
-            _this.router.navigate(["/"]);
-        });
+        if (this.id) {
+            this.course = form.value;
+            this.course.id = Number(this.id);
+            this.coursesService.update(this.course).subscribe(function (r) {
+                return _this.router.navigate(["/"]);
+            });
+        }
+        else {
+            this.coursesService.create(form.value).subscribe(function (course) {
+                _this.router.navigate(["/"]);
+            });
+        }
     };
     CourseFormComponent = __decorate([
         core_1.Component({
@@ -31,7 +55,7 @@ var CourseFormComponent = /** @class */ (function () {
             templateUrl: './course-form.component.html',
             styleUrls: ['./course-form.component.css']
         }),
-        __metadata("design:paramtypes", [courses_service_1.CoursesService, router_1.Router])
+        __metadata("design:paramtypes", [courses_service_1.CoursesService, router_1.Router, router_1.ActivatedRoute])
     ], CourseFormComponent);
     return CourseFormComponent;
 }());

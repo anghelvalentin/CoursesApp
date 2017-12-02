@@ -10,18 +10,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var enrolment_service_1 = require("../../services/enrolment.service");
 var MyCoursesComponent = /** @class */ (function () {
-    function MyCoursesComponent() {
+    function MyCoursesComponent(enrolmentService) {
+        this.enrolmentService = enrolmentService;
+        this.enrolments = [];
     }
     MyCoursesComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.enrolmentService.getAll().subscribe(function (enrolments) {
+            // fa ceva si pentru cele mai vechi sa se vada
+            enrolments = enrolments.filter(function (e) { return new Date(e.date) > new Date(); });
+            enrolments.sort(function (a, b) {
+                return new Date(a.date) > new Date(b.date) ? 1 : -1;
+            });
+            _this.enrolments = enrolments;
+        });
     };
     MyCoursesComponent = __decorate([
         core_1.Component({
-            selector: 'app-my-courses',
+            selector: 'my-courses',
             templateUrl: './my-courses.component.html',
             styleUrls: ['./my-courses.component.css']
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [enrolment_service_1.EnrolmentService])
     ], MyCoursesComponent);
     return MyCoursesComponent;
 }());

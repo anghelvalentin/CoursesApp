@@ -48,6 +48,7 @@ var AppModule = /** @class */ (function () {
                     { path: '', component: home_component_1.HomeComponent },
                     { path: 'MyCourses', component: my_courses_component_1.MyCoursesComponent },
                     { path: 'course/new', component: course_form_component_1.CourseFormComponent },
+                    { path: 'course/edit/:id', component: course_form_component_1.CourseFormComponent },
                     { path: 'course/:id', component: course_component_1.CourseComponent },
                     { path: 'no-access', component: no_access_component_1.NoAccessComponent }
                 ])

@@ -39,6 +39,7 @@ import { EnrolmentService } from './services/enrolment.service';
           { path: '', component: HomeComponent },
           { path: 'MyCourses', component: MyCoursesComponent},
           { path: 'course/new', component: CourseFormComponent },
+          { path: 'course/edit/:id', component: CourseFormComponent },
           { path: 'course/:id', component: CourseComponent},
           { path: 'no-access', component: NoAccessComponent }
       ])

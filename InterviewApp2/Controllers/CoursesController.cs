@@ -106,5 +106,49 @@ namespace InterviewApp2.Controllers
             _context.SaveChanges();
             return CreatedAtRoute("GetCourse", new { id = course.Id }, course);
         }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var course = _context.Courses.Where(c => c.Id == id).SingleOrDefault();
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            _context.Enrollments.RemoveRange(_context.Enrollments.Where(e => e.CourseId == id));
+            _context.Courses.Remove(course);
+            _context.SaveChanges();
+
+            return new NoContentResult();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody]Course course)
+        {
+            if (course == null || id != course.Id)
+            {
+                return BadRequest();
+            }
+
+            var courseToUpdate = _context.Courses.Where(c => c.Id == id).SingleOrDefault();
+            if (courseToUpdate == null)
+            {
+                return NotFound();
+            }
+            courseToUpdate.Name = course.Name;
+            courseToUpdate.Date = course.Date;
+            courseToUpdate.Description = course.Description;
+            courseToUpdate.FreeSpots = course.FreeSpots;
+            courseToUpdate.ImageUrl = course.ImageUrl;
+            courseToUpdate.Spots = course.Spots;
+            courseToUpdate.Price = course.Price;
+
+            _context.Courses.Update(courseToUpdate);
+            _context.SaveChanges();
+
+            return new NoContentResult();
+        }
     }
 }

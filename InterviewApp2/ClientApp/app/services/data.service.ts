@@ -31,7 +31,7 @@ export class DataService {
     }
 
     update(resource) {
-        return this.http.patch(this.url + '/' + resource.id, JSON.stringify({ isRead: true }))
+        return this.http.put(this.url + '/' + resource.id,resource)
             .map(response => response.json())
             .catch(this.handleError);
     }

@@ -90,6 +90,7 @@ AppModule = __decorate([
                 { path: '', component: __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__["a" /* HomeComponent */] },
                 { path: 'MyCourses', component: __WEBPACK_IMPORTED_MODULE_9__components_my_courses_my_courses_component__["a" /* MyCoursesComponent */] },
                 { path: 'course/new', component: __WEBPACK_IMPORTED_MODULE_12__components_course_form_course_form_component__["a" /* CourseFormComponent */] },
+                { path: 'course/edit/:id', component: __WEBPACK_IMPORTED_MODULE_12__components_course_form_course_form_component__["a" /* CourseFormComponent */] },
                 { path: 'course/:id', component: __WEBPACK_IMPORTED_MODULE_11__components_course_course_component__["a" /* CourseComponent */] },
                 { path: 'no-access', component: __WEBPACK_IMPORTED_MODULE_15__components_general_no_access_no_access_component__["a" /* NoAccessComponent */] }
             ])
@@ -336,7 +337,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../ClientApp/app/components/course-form/course-form.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <form #f=\"ngForm\" (ngSubmit)=\"submit(f)\">\r\n        <div class=\"form-group\">\r\n            <label>Name</label>\r\n            <input type=\"text\" name=\"name\" class=\"form-control\" ngModel #name=\"ngModel\" required minlength=\"3\" maxlength=\"100\"/>\r\n            <div *ngIf=\"name.touched && !name.valid\" class=\"alert alert-danger\">\r\n                <div *ngIf=\"name.errors.required\">\r\n                    The course name is required\r\n                </div>\r\n                <div *ngIf=\"name.errors.minlength\">\r\n                    The course name must have at least {{name.errors.minlength.requiredLength}} characters\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label>Description</label>\r\n            <textarea class=\"form-control\" name=\"description\" ngModel #description=\"ngModel\" required  minlength=\"15\"></textarea>\r\n            <div *ngIf=\"description.touched && !description.valid\" class=\"alert alert-danger\">\r\n                <div *ngIf=\"description.errors.required\">\r\n                    The course description is required\r\n                </div>\r\n                <div *ngIf=\"description.errors.minlength\">\r\n                    The course description must have at least {{description.errors.minlength.requiredLength}} characters\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label>Price</label>\r\n            <input type=\"number\" name=\"price\" class=\"form-control\" ngModel #price=\"ngModel\" required positivePrice/>\r\n            <div class=\"alert alert-danger\" *ngIf=\"price.touched&&!price.valid\">\r\n                <div *ngIf=\"price.errors.required\">\r\n                    The price is required\r\n                </div>\r\n                <div *ngIf=\"price.errors.price\">\r\n                    The course can't have a negative price\r\n                </div>\r\n            </div>\r\n          \r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n            <label>Date</label>\r\n            <input type=\"date\" name=\"date\" class=\"form-control\" ngModel #date=\"ngModel\" required/>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label>Spots</label>\r\n            <input type=\"number\" min=\"1\" max=\"1000\" name=\"spots\" class=\"form-control\" [(ngModel)]=\"spotsDefault\" #spots=\"ngModel\" required/>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n            <label>Image URL</label>\r\n            <input type=\"url\" class=\"form-control\" name=\"imageUrl\" ngModel #imageUrl=\"ngModel\" required/>\r\n        </div>\r\n        <button type=\"submit\" [disabled]=\"!f.valid\" class=\"btn btn-primary center-block\">Add course</button>\r\n    </form>\r\n</div>"
+module.exports = "<div class=\"container\">\r\n    <form #f=\"ngForm\" (ngSubmit)=\"submit(f)\">\r\n        <div class=\"form-group\">\r\n            <label>Name</label>\r\n            <input type=\"text\" name=\"name\" class=\"form-control\" [ngModel]=\"course?.name\" #name=\"ngModel\" required minlength=\"3\" maxlength=\"100\"/>\r\n            <div *ngIf=\"name.touched && !name.valid\" class=\"alert alert-danger\">\r\n                <div *ngIf=\"name.errors.required\">\r\n                    The course name is required\r\n                </div>\r\n                <div *ngIf=\"name.errors.minlength\">\r\n                    The course name must have at least {{name.errors.minlength.requiredLength}} characters\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label>Description</label>\r\n            <textarea class=\"form-control\" name=\"description\" [ngModel]=\"course?.description\" #description=\"ngModel\" required  minlength=\"15\"></textarea>\r\n            <div *ngIf=\"description.touched && !description.valid\" class=\"alert alert-danger\">\r\n                <div *ngIf=\"description.errors.required\">\r\n                    The course description is required\r\n                </div>\r\n                <div *ngIf=\"description.errors.minlength\">\r\n                    The course description must have at least {{description.errors.minlength.requiredLength}} characters\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label>Price</label>\r\n            <input type=\"number\" name=\"price\" class=\"form-control\" [ngModel]=\"course?.price\" #price=\"ngModel\" required positivePrice/>\r\n            <div class=\"alert alert-danger\" *ngIf=\"price.touched&&!price.valid\">\r\n                <div *ngIf=\"price.errors.required\">\r\n                    The price is required\r\n                </div>\r\n                <div *ngIf=\"price.errors.price\">\r\n                    The course can't have a negative price\r\n                </div>\r\n            </div>\r\n          \r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n            <label>Date</label>\r\n            <input type=\"date\" name=\"date\" class=\"form-control\" [ngModel]=\"course?.date\" #date=\"ngModel\" required/>\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label>Spots</label>\r\n            <input type=\"number\" min=\"1\" max=\"1000\" name=\"spots\" class=\"form-control\" [ngModel]=\"course?.spots\" #spots=\"ngModel\" required/>\r\n        </div>\r\n\r\n        <div class=\"form-group\">\r\n            <label>Image URL</label>\r\n            <input type=\"url\" class=\"form-control\" name=\"imageUrl\" [ngModel]=\"course?.imageUrl\" #imageUrl=\"ngModel\" required/>\r\n        </div>\r\n        <button type=\"submit\" [disabled]=\"!f.valid\" class=\"btn btn-primary center-block\">Save</button>\r\n    </form>\r\n</div>"
 
 /***/ }),
 
@@ -361,17 +362,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var CourseFormComponent = (function () {
-    function CourseFormComponent(coursesService, router) {
+    //readonly spotsDefault = 30;
+    function CourseFormComponent(coursesService, router, route) {
         this.coursesService = coursesService;
         this.router = router;
-        this.spotsDefault = 30;
+        this.route = route;
     }
+    CourseFormComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.id = this.route.snapshot.params["id"];
+        if (this.id) {
+            this.coursesService.get(this.id)
+                .subscribe(function (c) {
+                c.date = new Date(c.date).toJSON().slice(0, 10).replace(/-/g, '-');
+                _this.course = c;
+            });
+        }
+        else {
+            this.course = {};
+            this.course.spots = 30;
+        }
+    };
     CourseFormComponent.prototype.submit = function (form) {
         var _this = this;
-        console.log(form.value);
-        this.coursesService.create(form.value).subscribe(function (course) {
-            _this.router.navigate(["/"]);
-        });
+        if (this.id) {
+            this.course = form.value;
+            this.course.id = Number(this.id);
+            this.coursesService.update(this.course).subscribe(function (r) {
+                return _this.router.navigate(["/"]);
+            });
+        }
+        else {
+            this.coursesService.create(form.value).subscribe(function (course) {
+                _this.router.navigate(["/"]);
+            });
+        }
     };
     return CourseFormComponent;
 }());
@@ -381,10 +406,10 @@ CourseFormComponent = __decorate([
         template: __webpack_require__("../../../../../ClientApp/app/components/course-form/course-form.component.html"),
         styles: [__webpack_require__("../../../../../ClientApp/app/components/course-form/course-form.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_courses_service__["a" /* CoursesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_courses_service__["a" /* CoursesService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_courses_service__["a" /* CoursesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_courses_service__["a" /* CoursesService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object])
 ], CourseFormComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=course-form.component.js.map
 
 /***/ }),
@@ -410,7 +435,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../ClientApp/app/components/course/course.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-8 col-xs-offset-2\" *ngIf=\"course\">\r\n            <div class=\"panel panel-default\">\r\n                <div class=\"panel-heading\">\r\n                    <h3 class=\"panel-title\"><strong>{{course.name}}</strong></h3>\r\n                </div>\r\n                <div class=\"panel-body\">\r\n                    <img [src]=\"course.imageUrl\" class=\"center-block\" />\r\n                    <hr/>\r\n                    <p>{{course.description}}</p>\r\n                    <button *ngIf=\"!isEnrolled\" class=\"btn btn-success center-block\" (click)=\"enroll()\">Enroll</button>\r\n                    <button *ngIf=\"isEnrolled\" class=\"btn btn-danger center-block\" (click)=\"enroll()\">UnSubscribe</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-8 col-xs-offset-2\" *ngIf=\"course\">\r\n            <div class=\"panel panel-default\">\r\n                <div class=\"panel-heading\">\r\n                    <h3 class=\"panel-title\">\r\n                        <strong>{{course.name}}</strong> \r\n                        <button class=\"btn btn-default\" type=\"button\" *ngIf=\"authService.currentUser.isAdmin\" (click)=\"edit()\">Edit</button> \r\n                        <button class=\"btn btn-danger\" type=\"button\" *ngIf=\"authService.currentUser.isAdmin\" (click)=\"delete()\">Delete</button>\r\n                    </h3>\r\n                </div>\r\n                <div class=\"panel-body\">\r\n                    <img [src]=\"course.imageUrl\" class=\"center-block\" />\r\n                    <hr/>\r\n                    <p>{{course.description}}</p>\r\n                    <button *ngIf=\"!isEnrolled\" class=\"btn btn-success center-block\" (click)=\"enroll()\">Enroll</button>\r\n                    <button *ngIf=\"isEnrolled\" class=\"btn btn-danger center-block\" (click)=\"enroll()\">UnSubscribe</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -420,8 +445,10 @@ module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n      
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CourseComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_enrolment_service__ = __webpack_require__("../../../../../ClientApp/app/services/enrolment.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_courses_service__ = __webpack_require__("../../../../../ClientApp/app/services/courses.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_enrolment_service__ = __webpack_require__("../../../../../ClientApp/app/services/enrolment.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_auth_service__ = __webpack_require__("../../../../../ClientApp/app/services/auth.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -434,11 +461,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var CourseComponent = (function () {
-    function CourseComponent(route, router, enrolmentService) {
+    function CourseComponent(route, router, enrolmentService, authService, courseService) {
         this.route = route;
         this.router = router;
         this.enrolmentService = enrolmentService;
+        this.authService = authService;
+        this.courseService = courseService;
     }
     CourseComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -453,14 +484,19 @@ var CourseComponent = (function () {
         var enrolment = { CourseId: this.id };
         if (!this.isEnrolled) {
             this.enrolmentService.create(enrolment).subscribe(function (e) {
-                console.log(e);
             });
         }
         else {
-            console.log("Stergem " + this.id);
             this.enrolmentService.delete(this.id);
         }
         this.isEnrolled = !this.isEnrolled;
+    };
+    CourseComponent.prototype.edit = function () {
+        this.router.navigate(["course/edit", this.id]);
+    };
+    CourseComponent.prototype.delete = function () {
+        var _this = this;
+        this.courseService.delete(this.id).then(function (r) { return _this.router.navigate(["/"]); });
     };
     return CourseComponent;
 }());
@@ -470,10 +506,10 @@ CourseComponent = __decorate([
         template: __webpack_require__("../../../../../ClientApp/app/components/course/course.component.html"),
         styles: [__webpack_require__("../../../../../ClientApp/app/components/course/course.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_enrolment_service__["a" /* EnrolmentService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_enrolment_service__["a" /* EnrolmentService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_enrolment_service__["a" /* EnrolmentService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_enrolment_service__["a" /* EnrolmentService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__services_courses_service__["a" /* CoursesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_courses_service__["a" /* CoursesService */]) === "function" && _e || Object])
 ], CourseComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=course.component.js.map
 
 /***/ }),
@@ -560,7 +596,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../ClientApp/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-md-6\">\r\n            <div *ngFor=\"let course of courses\" class=\"list-group\">\r\n                <a  class=\"list-group-item\">\r\n                    <h4 class=\"list-group-item-heading\">{{course.name}}</h4>\r\n                    <p class=\"list-group-item-text\">{{course.description}}</p>\r\n                    <button class=\"btn btn-primary\">Enroll</button>\r\n                </a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>-->\r\n<div class=\"container-fluid\">\r\n    <div class=\"row\">\r\n        <div *ngFor=\"let course of courses\" class=\"col-sm-6 col-md-4\">\r\n            <div class=\"thumbnail\">\r\n                <img class=\"course-img\" [src]=\"course.imageUrl\" width=\"304\" height=\"171\">\r\n                <div class=\"caption\">\r\n                    <h3>{{course.name}}</h3>\r\n                    <p>{{course.description| summary:115}}</p>\r\n                    <p><a [routerLink]=\"['course',course.id]\" class=\"btn btn-primary center-block\" role=\"button\">View Details</a></p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container-fluid\">\r\n    <div class=\"row\">\r\n        <div class=\"col-md-4\">\r\n            <div class=\"form-group\">\r\n                <input #courseTitle type=\"text\" class=\"form-control\" (keyup)=\"keyup(courseTitle)\" placeholder=\"Search for a course\" />\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div *ngFor=\"let course of filteredCourses\" class=\"col-sm-6 col-md-4\">\r\n            <div class=\"thumbnail\">\r\n                <img class=\"course-img\" [src]=\"course.imageUrl\" width=\"304\" height=\"171\">\r\n                <div class=\"caption\">\r\n                    <h3>{{course.name}}</h3>\r\n                    <p>{{course.description| summary:115}}</p>\r\n                    <p><a [routerLink]=\"['course',course.id]\" class=\"btn btn-primary center-block\" role=\"button\">View Details</a></p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -591,7 +627,16 @@ var HomeComponent = (function () {
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.coursesService.getAll().subscribe(function (courses) { return _this.courses = courses; });
+        this.coursesService.getAll().subscribe(function (courses) { return _this.filteredCourses = _this.courses = courses; });
+    };
+    HomeComponent.prototype.keyup = function (courseTitleHtml) {
+        var courseTitle = courseTitleHtml.value.toLowerCase();
+        if (courseTitle.length > 1) {
+            this.filteredCourses = this.courses.filter(function (course) { return course.name.toLowerCase().indexOf(courseTitle) > -1 || course.description.toLowerCase().indexOf(courseTitle) > -1; });
+        }
+        else {
+            this.filteredCourses = this.courses;
+        }
     };
     return HomeComponent;
 }());
@@ -617,7 +662,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".table > tbody > tr > td {\r\n    vertical-align: middle;\r\n    text-align:center;\r\n}\r\n\r\n.table > thead > tr >th{\r\n    text-align:center;\r\n}", ""]);
 
 // exports
 
@@ -630,7 +675,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../ClientApp/app/components/my-courses/my-courses.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  my-courses works!\n</p>\n"
+module.exports = "<div class=\"container\">\r\n    <div *ngIf=\"enrolments.length>0; then enrolmentsView else noEnrolmentsView\"></div>\r\n    <ng-template #enrolmentsView>\r\n        <div class=\"table-responsive\">\r\n            <table class=\"table table-hover\">\r\n                <thead>\r\n                    <tr>\r\n                        <th>Name</th>\r\n                        <th>Price</th>\r\n                        <th>Date</th>\r\n                        <th>Image</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <tr *ngFor=\"let enrolment of enrolments\" (ngClick)=\"onCourseClick()\">\r\n                        <td>{{enrolment.name}}</td>\r\n                        <td>{{enrolment.price}}</td>\r\n                        <td>{{enrolment.date | date}}</td>\r\n                        <td><img [src]=\"enrolment.imageUrl\" width=\"150\" height=\"100\" /></td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </ng-template>\r\n    <ng-template #noEnrolmentsView>\r\n        <h3 class=\"info center-block\">You are not registered to any course. Enroll now and learn something!</h3>\r\n    </ng-template>\r\n</div>"
 
 /***/ }),
 
@@ -640,6 +685,7 @@ module.exports = "<p>\n  my-courses works!\n</p>\n"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyCoursesComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_enrolment_service__ = __webpack_require__("../../../../../ClientApp/app/services/enrolment.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -650,22 +696,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var MyCoursesComponent = (function () {
-    function MyCoursesComponent() {
+    function MyCoursesComponent(enrolmentService) {
+        this.enrolmentService = enrolmentService;
+        this.enrolments = [];
     }
     MyCoursesComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.enrolmentService.getAll().subscribe(function (enrolments) {
+            // fa ceva si pentru cele mai vechi sa se vada
+            enrolments = enrolments.filter(function (e) { return new Date(e.date) > new Date(); });
+            enrolments.sort(function (a, b) {
+                return new Date(a.date) > new Date(b.date) ? 1 : -1;
+            });
+            _this.enrolments = enrolments;
+        });
     };
     return MyCoursesComponent;
 }());
 MyCoursesComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-my-courses',
+        selector: 'my-courses',
         template: __webpack_require__("../../../../../ClientApp/app/components/my-courses/my-courses.component.html"),
         styles: [__webpack_require__("../../../../../ClientApp/app/components/my-courses/my-courses.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_enrolment_service__["a" /* EnrolmentService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_enrolment_service__["a" /* EnrolmentService */]) === "function" && _a || Object])
 ], MyCoursesComponent);
 
+var _a;
 //# sourceMappingURL=my-courses.component.js.map
 
 /***/ }),
@@ -673,7 +732,7 @@ MyCoursesComponent = __decorate([
 /***/ "../../../../../ClientApp/app/components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-inverse\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\r\n                <span class=\"sr-only\">Toggle navigation</span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n            </button>\r\n            <a class=\"navbar-brand\" routerLink=\"/\">Courses App</a>\r\n        </div>\r\n        <div class=\"collapse navbar-collapse\">\r\n            <ul class=\"nav navbar-nav\">\r\n                <li>\r\n                    <a routerLink=\"/MyCourses\">My Courses</a>\r\n                </li>\r\n            </ul>\r\n            <form class=\"navbar-form navbar-left\">\r\n                <a *ngIf=\"authService.currentUser.isAdmin\" routerLink=\"/course/new\" class=\"btn btn-primary\">Add Course</a>\r\n            </form>\r\n            <p class=\"nav navbar-text navbar-right\">{{authService.currentUser.user}}</p>\r\n        </div>\r\n    </div>\r\n</nav>"
+module.exports = "<nav class=\"navbar navbar-default navbar-inverse\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\r\n                <span class=\"sr-only\">Toggle navigation</span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n            </button>\r\n            <a class=\"navbar-brand\" routerLink=\"/\">Courses App</a>\r\n        </div>\r\n        <div class=\"collapse navbar-collapse\">\r\n            <ul class=\"nav navbar-nav\">\r\n                <li>\r\n                    <a routerLink=\"/MyCourses\">My Schedule</a>\r\n                </li>\r\n            </ul>\r\n            <form class=\"navbar-form navbar-left\">\r\n                <a *ngIf=\"authService.currentUser.isAdmin\" routerLink=\"/course/new\" class=\"btn btn-primary\">Add Course</a>\r\n            </form>\r\n            <p class=\"nav navbar-text navbar-right\">{{authService.currentUser.user}}</p>\r\n        </div>\r\n    </div>\r\n</nav>"
 
 /***/ }),
 
@@ -907,7 +966,7 @@ var DataService = (function () {
             .map(function (response) { return response.json(); });
     };
     DataService.prototype.update = function (resource) {
-        return this.http.patch(this.url + '/' + resource.id, JSON.stringify({ isRead: true }))
+        return this.http.put(this.url + '/' + resource.id, resource)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };

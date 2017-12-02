@@ -35,6 +35,24 @@ namespace InterviewApp2.Controllers
             return CreatedAtRoute("GetEnrolment", new { id = enrolment.CourseId }, enrolment);
         }
 
+
+        [HttpGet]
+        public IEnumerable<CourseDto> GetEnrollments()
+        {
+            var enrolments = _context.Enrollments
+               .Where(e => e.UserId.Equals(HttpContext.User.Identity.Name)).Include(e => e.Course).Select(e => new CourseDto()
+               {
+                   Date = e.Course.Date,
+                   Description = e.Course.Description,
+                   ImageUrl = e.Course.ImageUrl,
+                   Name = e.Course.Name,
+                   Price = e.Course.Price,
+                   Spots = e.Course.Spots
+               });
+
+            return enrolments;
+        }
+
         [HttpGet("{id}", Name = "GetEnrolment")]
         public IActionResult GetEnrolment(int id)
         {

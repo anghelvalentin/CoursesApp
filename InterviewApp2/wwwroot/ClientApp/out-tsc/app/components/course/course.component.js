@@ -10,13 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var courses_service_1 = require("../../services/courses.service");
 var router_1 = require("@angular/router");
 var enrolment_service_1 = require("../../services/enrolment.service");
+var auth_service_1 = require("../../services/auth.service");
 var CourseComponent = /** @class */ (function () {
-    function CourseComponent(route, router, enrolmentService) {
+    function CourseComponent(route, router, enrolmentService, authService, courseService) {
         this.route = route;
         this.router = router;
         this.enrolmentService = enrolmentService;
+        this.authService = authService;
+        this.courseService = courseService;
     }
     CourseComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -31,14 +35,19 @@ var CourseComponent = /** @class */ (function () {
         var enrolment = { CourseId: this.id };
         if (!this.isEnrolled) {
             this.enrolmentService.create(enrolment).subscribe(function (e) {
-                console.log(e);
             });
         }
         else {
-            console.log("Stergem " + this.id);
             this.enrolmentService.delete(this.id);
         }
         this.isEnrolled = !this.isEnrolled;
+    };
+    CourseComponent.prototype.edit = function () {
+        this.router.navigate(["course/edit", this.id]);
+    };
+    CourseComponent.prototype.delete = function () {
+        var _this = this;
+        this.courseService.delete(this.id).then(function (r) { return _this.router.navigate(["/"]); });
     };
     CourseComponent = __decorate([
         core_1.Component({
@@ -46,7 +55,9 @@ var CourseComponent = /** @class */ (function () {
             templateUrl: './course.component.html',
             styleUrls: ['./course.component.css']
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, enrolment_service_1.EnrolmentService])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router,
+            enrolment_service_1.EnrolmentService, auth_service_1.AuthService,
+            courses_service_1.CoursesService])
     ], CourseComponent);
     return CourseComponent;
 }());

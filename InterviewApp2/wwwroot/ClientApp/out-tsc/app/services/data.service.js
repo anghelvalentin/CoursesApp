@@ -39,7 +39,7 @@ var DataService = /** @class */ (function () {
             .map(function (response) { return response.json(); });
     };
     DataService.prototype.update = function (resource) {
-        return this.http.patch(this.url + '/' + resource.id, JSON.stringify({ isRead: true }))
+        return this.http.put(this.url + '/' + resource.id, resource)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
