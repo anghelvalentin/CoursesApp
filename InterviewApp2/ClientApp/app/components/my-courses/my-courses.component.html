@@ -1,28 +1,53 @@
 <div class="container">
-    <div *ngIf="enrolments.length>0; then enrolmentsView else noEnrolmentsView"></div>
-    <ng-template #enrolmentsView>
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Date</th>
-                        <th>Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let enrolment of enrolments" (ngClick)="onCourseClick()">
-                        <td>{{enrolment.name}}</td>
-                        <td>{{enrolment.price}}</td>
-                        <td>{{enrolment.date | date}}</td>
-                        <td><img [src]="enrolment.imageUrl" width="150" height="100" /></td>
-                    </tr>
-                </tbody>
-            </table>
+    <div [ngSwitch]="viewMode">
+        <div *ngSwitchCase="'loading'">
+            <h3>Loading ...</h3>
         </div>
-    </ng-template>
-    <ng-template #noEnrolmentsView>
-        <h3 class="info center-block">You are not registered to any course. Enroll now and learn something!</h3>
-    </ng-template>
+        <div *ngSwitchCase="'courses'">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let enrolment of enrolments" (ngClick)="onCourseClick()">
+                            <td>{{enrolment.name}}</td>
+                            <td>{{enrolment.price}}</td>
+                            <td>{{enrolment.date | date}}</td>
+                            <td><img [src]="enrolment.imageUrl" width="150" height="100" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a (click)="showOldCourses=!showOldCourses" *ngIf="oldEnrolments.length>0">Show old courses</a>
+            <div class="table-responsive" *ngIf="showOldCourses">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let enrolment of oldEnrolments" (ngClick)="onCourseClick()">
+                            <td>{{enrolment.name}}</td>
+                            <td>{{enrolment.price}}</td>
+                            <td>{{enrolment.date | date}}</td>
+                            <td><img [src]="enrolment.imageUrl" width="150" height="100" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div *ngSwitchCase="'noCourses'">
+            <h3 class="info center-block">You are not registered to any course. Enroll now and learn something!</h3>
+        </div>
+    </div>
 </div>

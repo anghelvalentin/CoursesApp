@@ -47,13 +47,13 @@ var AppModule = /** @class */ (function () {
                 router_1.RouterModule.forRoot([
                     { path: '', component: home_component_1.HomeComponent },
                     { path: 'MyCourses', component: my_courses_component_1.MyCoursesComponent },
-                    { path: 'course/new', component: course_form_component_1.CourseFormComponent },
-                    { path: 'course/edit/:id', component: course_form_component_1.CourseFormComponent },
+                    { path: 'course/new', component: course_form_component_1.CourseFormComponent, canActivate: [auth_guard_service_1.AdminGuard] },
+                    { path: 'course/edit/:id', component: course_form_component_1.CourseFormComponent, canActivate: [auth_guard_service_1.AdminGuard] },
                     { path: 'course/:id', component: course_component_1.CourseComponent },
                     { path: 'no-access', component: no_access_component_1.NoAccessComponent }
                 ])
             ],
-            providers: [courses_service_1.CoursesService, auth_service_1.AuthService, auth_guard_service_1.AuthGuard, enrolment_service_1.EnrolmentService],
+            providers: [courses_service_1.CoursesService, auth_service_1.AuthService, auth_guard_service_1.AdminGuard, enrolment_service_1.EnrolmentService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);

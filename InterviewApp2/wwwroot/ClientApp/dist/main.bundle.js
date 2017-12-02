@@ -675,7 +675,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../ClientApp/app/components/my-courses/my-courses.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div *ngIf=\"enrolments.length>0; then enrolmentsView else noEnrolmentsView\"></div>\r\n    <ng-template #enrolmentsView>\r\n        <div class=\"table-responsive\">\r\n            <table class=\"table table-hover\">\r\n                <thead>\r\n                    <tr>\r\n                        <th>Name</th>\r\n                        <th>Price</th>\r\n                        <th>Date</th>\r\n                        <th>Image</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <tr *ngFor=\"let enrolment of enrolments\" (ngClick)=\"onCourseClick()\">\r\n                        <td>{{enrolment.name}}</td>\r\n                        <td>{{enrolment.price}}</td>\r\n                        <td>{{enrolment.date | date}}</td>\r\n                        <td><img [src]=\"enrolment.imageUrl\" width=\"150\" height=\"100\" /></td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </ng-template>\r\n    <ng-template #noEnrolmentsView>\r\n        <h3 class=\"info center-block\">You are not registered to any course. Enroll now and learn something!</h3>\r\n    </ng-template>\r\n</div>"
+module.exports = "<div class=\"container\">\r\n    <div [ngSwitch]=\"viewMode\">\r\n        <div *ngSwitchCase=\"'loading'\">\r\n            <h3>Loading ...</h3>\r\n        </div>\r\n        <div *ngSwitchCase=\"'courses'\">\r\n            <div class=\"table-responsive\">\r\n                <table class=\"table table-hover\">\r\n                    <thead>\r\n                        <tr>\r\n                            <th>Name</th>\r\n                            <th>Price</th>\r\n                            <th>Date</th>\r\n                            <th>Image</th>\r\n                        </tr>\r\n                    </thead>\r\n                    <tbody>\r\n                        <tr *ngFor=\"let enrolment of enrolments\" (ngClick)=\"onCourseClick()\">\r\n                            <td>{{enrolment.name}}</td>\r\n                            <td>{{enrolment.price}}</td>\r\n                            <td>{{enrolment.date | date}}</td>\r\n                            <td><img [src]=\"enrolment.imageUrl\" width=\"150\" height=\"100\" /></td>\r\n                        </tr>\r\n                    </tbody>\r\n                </table>\r\n            </div>\r\n            <a (click)=\"showOldCourses=!showOldCourses\" *ngIf=\"oldEnrolments.length>0\">Show old courses</a>\r\n            <div class=\"table-responsive\" *ngIf=\"showOldCourses\">\r\n                <table class=\"table table-hover\">\r\n                    <thead>\r\n                        <tr>\r\n                            <th>Name</th>\r\n                            <th>Price</th>\r\n                            <th>Date</th>\r\n                            <th>Image</th>\r\n                        </tr>\r\n                    </thead>\r\n                    <tbody>\r\n                        <tr *ngFor=\"let enrolment of oldEnrolments\" (ngClick)=\"onCourseClick()\">\r\n                            <td>{{enrolment.name}}</td>\r\n                            <td>{{enrolment.price}}</td>\r\n                            <td>{{enrolment.date | date}}</td>\r\n                            <td><img [src]=\"enrolment.imageUrl\" width=\"150\" height=\"100\" /></td>\r\n                        </tr>\r\n                    </tbody>\r\n                </table>\r\n            </div>\r\n        </div>\r\n        <div *ngSwitchCase=\"'noCourses'\">\r\n            <h3 class=\"info center-block\">You are not registered to any course. Enroll now and learn something!</h3>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -701,16 +701,22 @@ var MyCoursesComponent = (function () {
     function MyCoursesComponent(enrolmentService) {
         this.enrolmentService = enrolmentService;
         this.enrolments = [];
+        this.oldEnrolments = [];
+        this.viewMode = 'loading';
+        this.showOldCourses = false;
     }
     MyCoursesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.enrolmentService.getAll().subscribe(function (enrolments) {
-            // fa ceva si pentru cele mai vechi sa se vada
-            enrolments = enrolments.filter(function (e) { return new Date(e.date) > new Date(); });
-            enrolments.sort(function (a, b) {
+            _this.enrolments = enrolments.filter(function (e) { return new Date(e.date) > new Date(); });
+            _this.enrolments.sort(function (a, b) {
                 return new Date(a.date) > new Date(b.date) ? 1 : -1;
             });
-            _this.enrolments = enrolments;
+            _this.oldEnrolments = enrolments.filter(function (e) { return new Date(e.date) < new Date(); });
+            _this.oldEnrolments.sort(function (a, b) {
+                return new Date(a.date) > new Date(b.date) ? 1 : -1;
+            });
+            _this.viewMode = (_this.enrolments.length > 0 || _this.oldEnrolments.length > 0) ? 'courses' : 'noCourses';
         });
     };
     return MyCoursesComponent;

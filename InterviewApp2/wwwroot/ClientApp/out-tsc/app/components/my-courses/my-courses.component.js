@@ -15,16 +15,22 @@ var MyCoursesComponent = /** @class */ (function () {
     function MyCoursesComponent(enrolmentService) {
         this.enrolmentService = enrolmentService;
         this.enrolments = [];
+        this.oldEnrolments = [];
+        this.viewMode = 'loading';
+        this.showOldCourses = false;
     }
     MyCoursesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.enrolmentService.getAll().subscribe(function (enrolments) {
-            // fa ceva si pentru cele mai vechi sa se vada
-            enrolments = enrolments.filter(function (e) { return new Date(e.date) > new Date(); });
-            enrolments.sort(function (a, b) {
+            _this.enrolments = enrolments.filter(function (e) { return new Date(e.date) > new Date(); });
+            _this.enrolments.sort(function (a, b) {
                 return new Date(a.date) > new Date(b.date) ? 1 : -1;
             });
-            _this.enrolments = enrolments;
+            _this.oldEnrolments = enrolments.filter(function (e) { return new Date(e.date) < new Date(); });
+            _this.oldEnrolments.sort(function (a, b) {
+                return new Date(a.date) > new Date(b.date) ? 1 : -1;
+            });
+            _this.viewMode = (_this.enrolments.length > 0 || _this.oldEnrolments.length > 0) ? 'courses' : 'noCourses';
         });
     };
     MyCoursesComponent = __decorate([

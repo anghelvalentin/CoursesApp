@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using InterviewApp2.Entities;
 using InterviewApp2.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InterviewApp2.Controllers
 {
@@ -86,6 +87,7 @@ namespace InterviewApp2.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Coursera_admin")]
         public IActionResult Create([FromBody] Dto.CourseDto courseDto)
         {
             if (courseDto == null)
@@ -109,6 +111,7 @@ namespace InterviewApp2.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Coursera_admin")]
         public IActionResult Delete(int id)
         {
             var course = _context.Courses.Where(c => c.Id == id).SingleOrDefault();
@@ -125,6 +128,7 @@ namespace InterviewApp2.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Coursera_admin")]
         public IActionResult Update(int id, [FromBody]Course course)
         {
             if (course == null || id != course.Id)

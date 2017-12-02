@@ -7,19 +7,29 @@ import { EnrolmentService } from '../../services/enrolment.service';
   styleUrls: ['./my-courses.component.css']
 })
 export class MyCoursesComponent implements OnInit {
-    enrolments=[];
-
+    enrolments = [];
+    oldEnrolments = [];
+    viewMode = 'loading';
+    showOldCourses = false;
     constructor(private enrolmentService: EnrolmentService) { }
 
     ngOnInit() {
 
-        this.enrolmentService.getAll().subscribe(enrolments => {
-            // fa ceva si pentru cele mai vechi sa se vada
-            enrolments = enrolments.filter(e => new Date(e.date) > new Date());
-            enrolments.sort((a, b) => {
+        this.enrolmentService.getAll().subscribe(enrolments=> {
+            
+            this.enrolments = enrolments.filter(e => new Date(e.date) > new Date());
+            this.enrolments.sort((a, b) => {
                 return new Date(a.date) > new Date(b.date) ? 1 : -1
             });
-            this.enrolments = enrolments;
+            this.oldEnrolments = enrolments.filter(e => new Date(e.date) < new Date());
+            this.oldEnrolments.sort((a, b) => {
+                return new Date(a.date) > new Date(b.date) ? 1 : -1
+            });
+            
+
+            this.viewMode = (this.enrolments.length > 0 || this.oldEnrolments.length>0) ? 'courses' : 'noCourses';
         });
-  }
+    }
+
+    
 }

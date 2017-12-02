@@ -12,22 +12,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("../services/auth.service");
-var AuthGuard = /** @class */ (function () {
-    function AuthGuard(authService, router) {
+var AdminGuard = /** @class */ (function () {
+    function AdminGuard(authService, router) {
         this.authService = authService;
         this.router = router;
     }
-    AuthGuard.prototype.canActivate = function (route, state) {
-        if (this.authService.isLoggedIn())
+    AdminGuard.prototype.canActivate = function (route, state) {
+        if (this.authService.currentUser.isAdmin)
             return true;
         this.router.navigate(["/no-access"]);
         return false;
     };
-    AuthGuard = __decorate([
+    AdminGuard = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [auth_service_1.AuthService, router_1.Router])
-    ], AuthGuard);
-    return AuthGuard;
+    ], AdminGuard);
+    return AdminGuard;
 }());
-exports.AuthGuard = AuthGuard;
+exports.AdminGuard = AdminGuard;
 //# sourceMappingURL=auth-guard.service.js.map
