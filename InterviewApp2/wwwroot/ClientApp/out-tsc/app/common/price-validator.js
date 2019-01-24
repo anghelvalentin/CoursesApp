@@ -35,6 +35,7 @@ var PriceValidator = /** @class */ (function () {
     PriceValidator.prototype.validate = function (c) {
         return this.validator(c);
     };
+    var PriceValidator_1;
     PriceValidator = PriceValidator_1 = __decorate([
         core_1.Directive({
             selector: '[positivePrice][ngModel]',
@@ -45,7 +46,6 @@ var PriceValidator = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], PriceValidator);
     return PriceValidator;
-    var PriceValidator_1;
 }());
 exports.PriceValidator = PriceValidator;
 //# sourceMappingURL=price-validator.js.map
